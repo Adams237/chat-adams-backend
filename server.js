@@ -10,7 +10,10 @@ const socket = require('socket.io')
 const app = express()
 
 
-app.use(cors())
+app.use(cors({
+    origin:["https://chat-adams.netlify.app"],
+    credentials: true,
+}))
 app.use(express.json())
 app.use('/chat/user/auth', userRoutes)
 app.use('/chat/user/message', messageRoute)
