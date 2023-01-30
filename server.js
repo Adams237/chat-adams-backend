@@ -8,7 +8,6 @@ const socket = require('socket.io')
 
 
 const app = express()
-require("dotenv").config()
 
 
 app.use(cors())
@@ -16,8 +15,10 @@ app.use(express.json())
 app.use('/chat/user/auth', userRoutes)
 app.use('/chat/user/message', messageRoute)
 
+const PORT = process.env.PORT || 5000
 
-mongoose.connect(process.env.MONGO_URL,{
+
+mongoose.connect("mongodb+srv://chat:chat@cluster0.vhrl4rs.mongodb.net/chat-adams?retryWrites=true&w=majority",{
     useNewUrlParser:true,
     useUnifiedTopology:true
 }).then(()=>{
@@ -26,14 +27,14 @@ mongoose.connect(process.env.MONGO_URL,{
     console.log(err);
 })
 
-const server = app.listen(process.env.PORT,()=>{
-    console.log(`server lancer sur le server ${process.env.PORT}`);
+const server = app.listen(PORT,()=>{
+    console.log(`server lancer sur le server ${PORT}`);
 })
 
 
 const io = socket(server,{
     cors:{
-        origin: "http://localhost:3000",
+        origin: "https://chat-adams.netlify.app/",
         credentials: true,
     }
 })
